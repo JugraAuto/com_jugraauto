@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<metadata>
+	<layout title="Список компаний в категории" option="View">
+	</layout>
+	<!-- Выбор категории. -->
+	<fields name="request">
+		<fieldset name="request" label="COM_USLUGI_FIELDSET_OPTIONAL_LABEL">
+                    <field
+                        name="category_id"
+                        type="category"
+                        extension="com_jugraauto"
+                        label="Выберите категорию"
+                        description="Категория для отображения компаний"
+                        default=""
+                        required="true"
+                    >
+                    </field>
+		</fieldset>
+	</fields>
+</metadata>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<metadata>
+	<layout title="Single Company" option="View">
+	</layout>
+	<fields name="params">
+		<fieldset 
+            name="basic"
+			label="COM_JUGRAAUTO_FIELDSET_ITEM_ID_SELECT_LABEL">
+            <field
+    			name="item_id"
+    			query="SELECT `id` FROM #__jugraauto_companies ORDER BY `id`"
+                type="sql"
+                key_field="id" 
+                value_field="id"
+    			label="COM_JUGRAAUTO_ITEM_ID_SELECT_LABEL"
+                require="true"
+    			description="JGLOBAL_SHOW_TITLE_DESC">
+            </field>
+		</fieldset>
+	</fields>
+</metadata>
