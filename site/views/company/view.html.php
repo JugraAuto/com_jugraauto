@@ -47,6 +47,7 @@ class JugraautoViewCompany extends JView {
             if(!$Itemid OR $Itemid != $menu->id)
             {
                 $uri = JRoute::_(JUri::base()).$menu->path;
+//                JRequest::setVar('item_id', $Itemid->id);
                 JFactory::getApplication()->redirect($uri);
             }
         }

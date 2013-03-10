@@ -78,6 +78,7 @@ class JugraautoViewCompanies extends JView
 			    JToolBarHelper::divider();
 			    JToolBarHelper::custom('companies.publish', 'publish.png', 'publish_f2.png','JTOOLBAR_PUBLISH', true);
 			    JToolBarHelper::custom('companies.unpublish', 'unpublish.png', 'unpublish_f2.png', 'JTOOLBAR_UNPUBLISH', true);
+                            JToolBarHelper::deleteList('', 'companies.delete','JTOOLBAR_DELETE');
             } else if (isset($this->items[0])) {
                 //If this component does not use state then show a direct delete button as we can not trash
                 JToolBarHelper::deleteList('', 'companies.delete','JTOOLBAR_DELETE');
@@ -93,16 +94,16 @@ class JugraautoViewCompanies extends JView
 		}
         
         //Show trash and delete for components that uses the state field
-        if (isset($this->items[0]->state)) {
-		    if ($state->get('filter.state') == -2 && $canDo->get('core.delete')) {
-			    JToolBarHelper::deleteList('', 'companies.delete','JTOOLBAR_EMPTY_TRASH');
-			    JToolBarHelper::divider();
-		    } else if ($canDo->get('core.edit.state')) {
-			    JToolBarHelper::trash('companies.trash','JTOOLBAR_TRASH');
-			    JToolBarHelper::divider();
-		    }
-        }
-
+//        if (isset($this->items[0]->state)) {
+//		    if ($state->get('filter.state') == -2 && $canDo->get('core.delete')) {
+//			    JToolBarHelper::deleteList('', 'companies.delete','JTOOLBAR_EMPTY_TRASH');
+//			    JToolBarHelper::divider();
+//		    } else if ($canDo->get('core.edit.state')) {
+//			    JToolBarHelper::trash('companies.trash','JTOOLBAR_TRASH');
+//			    JToolBarHelper::divider();
+//		    }
+//        }
+//
 		if ($canDo->get('core.admin')) {
 			JToolBarHelper::preferences('com_jugraauto');
 		}

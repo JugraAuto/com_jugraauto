@@ -13,6 +13,8 @@ defined('_JEXEC') or die;
 //Load admin language file
 $lang = JFactory::getLanguage();
 $lang->load('com_jugraauto', JPATH_ADMINISTRATOR);
+$address = $this->item->street_type.' '.$this->item->street.', '.$this->item->house;
+//var_dump($this->item);
 ?>
 <?php if( $this->item ) : ?>
 <style type="text/css">

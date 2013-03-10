@@ -19,7 +19,7 @@ $lang->load('com_jugraauto', JPATH_ADMINISTRATOR);
     <?php if($this->children):?>
     <ul>
             <?php foreach ($this->children as $item) : ?>
-            <?php $href = JRoute::_(JUri::base().'index.php?option=com_jugraauto&view=category&category_id=' . (int) $item->id)?>
+            <?php $href = JRoute::_(JUri::base().'index.php?option=com_jugraauto&view=category&category_id='.(int)$item->id)?>
                     <li><a href="<?=$href;?>"><?php echo $item->title; ?></a></li>
             <?php endforeach; ?>
     </ul>
@@ -33,7 +33,7 @@ $lang->load('com_jugraauto', JPATH_ADMINISTRATOR);
 <script type="text/javascript">
     jQuery(document).ready(function($){
         $.ajax({
-            url: "<?=$this->companies_url?>",
+            url: "<?=$this->companies_url?>"
         }).done(function(data) {
             $('#com_jugraauto_company_ajax').html(data);
         });

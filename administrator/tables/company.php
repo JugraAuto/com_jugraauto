@@ -65,52 +65,64 @@ class JugraautoTableCompany extends JugraautoTableKtable {
 	 *
 	 */
         public function store($updateNulls = false) {
-            if (!parent::store($updateNulls))
-            {
-                return FALSE;
-            }
             // Создаем пункт меню с этой компанией
             $menu = $this->getTable('menu');
             // Если еще не создан пункт меню - создаем, если создан - переписываем алиас и путь
-            if(!$this->menu_id)
-            {
-                $client_id = JFactory::getUser()->id;
-                $component_id = $this->getTable('extension')->load(array('name'=>'com_jugraauto'))->id;
-                if( $menu->save(array(
-                        'menutype'=>'com_jugraauto',
+            $component = JTable::getInstance('extension');
+            $component->load(array('name'=>'com_jugraauto'));
+            $data = array(
                         'title'=>$this->name,
                         'alias'=>$this->alias,
-                        'path'=>$this->path,
-                        'link'=>'index.php?option=com_jugraauto&view=company',
-                        'type'=>'component',
-                        'component_id'=>$component_id,
-                        'client_id'=>$client_id,
-                        )
-                    ))
+                        'path'=>$this->alias,
+                        'menutype' => 'com_jugraauto',
+                        'link' => 'index.php?option=com_jugraauto&view=company',
+                        'type' => 'component',
+                        'component_id' => $component->extension_id,
+                        'published' => '1',
+                        'parent_id' => '1',
+                        'level' => '1',
+                        'access' => '1',
+                        );
+            if(!$this->menu_id)
+            {
+                // Если уже есть пункт меню с таким алиасом, то записываем его ИД в $this->menu_id
+                if($this->alias AND $menu->load(array('alias'=> $this->alias)))
                 {
-                        var_dump($menu);exit;
-                    $this->menu_id = $menu->id;
-                }
-                else 
-                {
-                    JFactory::getApplication()
-                            ->enqueueMessage(JText::_('COM_JUGRAAUTO_ERROR_SAVE_NEW_MENU_RECORD'), 'error');
-                    return FALSE;
+                    $data['id'] = $menu->id;
                 }
             }
             else 
             {
-                if(!$menu->save(array(
-                        'id'=>$this->menu_id,
-                        'alias'=>$this->alias,
-                        'path'=>$this->path,
-                        )
-                    ))
-                {
-                    JFactory::getApplication()
-                            ->enqueueMessage(JText::_('COM_JUGRAAUTO_ERROR_EDIT_MENU_RECORD'), 'error');
-                    return FALSE;
-                }
+                $data['id'] = $this->menu_id;
+            }
+            if(!$menu->save($data))
+            {
+                JFactory::getApplication()
+                        ->enqueueMessage(JText::_('COM_JUGRAAUTO_ERROR_EDIT_MENU_RECORD'), 'error');
+                return FALSE;
+            }
+            $this->menu_id = $menu->id;
+//                var_dump($data);
+//                var_dump(get_object_vars($menu));exit;
+            if( !parent::store($updateNulls))
+            {
+                return FALSE;
+            }
+            $menu->load($this->menu_id);
+            // Convert to the JObject before adding the params.
+            $properties = $menu->getProperties(1);
+            $result = JArrayHelper::toObject($properties, 'JObject');
+            // Convert the params field to an array.
+            $registry = new JRegistry;
+            $registry->loadString($menu->params);
+            $result->params = $registry->toArray();
+            $result->params = array_merge($result->params, array('item_id'=>$this->id));
+            $data['params'] = json_encode($result->params);
+            if(!$menu->save($data))
+            {
+                JFactory::getApplication()
+                        ->enqueueMessage(JText::_('COM_JUGRAAUTO_ERROR_EDIT_MENU_RECORD'), 'error');
+                return FALSE;
             }
             return TRUE;
         }
