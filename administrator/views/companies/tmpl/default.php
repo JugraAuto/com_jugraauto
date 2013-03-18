@@ -40,6 +40,11 @@ $saveOrder	= $listOrder == 'a.ordering';
 				<option value=""><?php echo JText::_('JOPTION_SELECT_PUBLISHED');?></option>
 				<?php echo JHtml::_('select.options', JHtml::_('jgrid.publishedOptions'), "value", "text", $this->state->get('filter.state'), true);?>
 			</select>
+			<select name="filter_category_id" class="inputbox" onchange="this.form.submit()">
+				<option value=""><?php echo JText::_('JOPTION_SELECT_CATEGORY');?></option>
+				<?php echo JHtml::_('select.options', JHtml::_('category.options', 'com_jugraauto'), 'value', 'text', $this->state->get('filter.category_id'));?>
+			</select>
+
 		</div>
 
 
@@ -127,7 +132,7 @@ $saveOrder	= $listOrder == 'a.ordering';
 					<?php echo $item->created_by; ?>
 				</td>
 				<td>
-					<?php echo $item->city_id; ?>
+					<?php echo $item->city_name; ?>
 				</td>
 
 

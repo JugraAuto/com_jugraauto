@@ -39,6 +39,11 @@ class JugraautoModelCompanies extends JugraautoModelKModelList
         }
 
         parent::__construct($config);
+            $category_id = JRequest::getInt('filter_category_id',0);
+            if($category_id)
+            {
+                $this->setState('filter.category_id', $category_id);
+            }
     }
 
 	/**
@@ -51,6 +56,14 @@ class JugraautoModelCompanies extends JugraautoModelKModelList
 	{
             $query = parent::getListQuery();
             $query->from('`#__jugraauto_companies` AS a');
+
+            // Filter by category_id
+            $category_id = $this->getState('filter.category_id');
+            if(isset($category_id))
+            {
+                $query->join('', '#__jugraauto_companies_categories AS comcat ON comcat.company_id=a.id');
+                $query->where('comcat.category_id = '.$category_id);
+            }
 
             // Filter by search in title
             $search = $this->getState('filter.search');
@@ -66,6 +79,9 @@ class JugraautoModelCompanies extends JugraautoModelKModelList
                     $query->where('( a.name LIKE '.$search.' )');
                 }
             }
+            $query->join('LEFT', '#__jugraauto_cities AS city ON city.id=a.city_id');
+            $query->select('city.name as city_name');
+//            var_dump((string)$query);            
             return $query;
         }
 }

@@ -96,8 +96,17 @@ class JugraautoModelCompanies extends JModelList {
                 $query->where('( a.name LIKE '.$search.' )');
 			}
 		}
+         // Фльтр по категории
+        $category_id = JRequest::getInt('category_id',NULL);
+        if(isset($category_id))
+        {
+            $query->join('', '#__jugraauto_companies_categories AS comcat ON comcat.company_id=a.id');
+            $query->where('comcat.category_id = '.$category_id);
+        }
         
+                
         
+//                var_dump((string)$query);exit;
         
         return $query;
     }
