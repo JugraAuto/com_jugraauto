@@ -13,8 +13,9 @@ defined('_JEXEC') or die;
 //Load admin language file
 $lang = JFactory::getLanguage();
 $lang->load('com_jugraauto', JPATH_ADMINISTRATOR);
+$ajax_loader_src = JURI::base().'components/com_jugraauto/assets/images/ajax-loader.gif';
 ?>
-<h1><?=$this->item->title?></h1>
+<h1><?=$this->item->title?><img id="ajax_loader" src="<?=$ajax_loader_src?>" alt="ajax loader" style="display: none; margin-left: 10px"></h1>
 <?php if( $this->item ) : ?>
     <?php if($this->children):?>
     <ul>
@@ -32,6 +33,10 @@ $lang->load('com_jugraauto', JPATH_ADMINISTRATOR);
 <div id="com_jugraauto_company_ajax"></div>
 <script type="text/javascript">
     jQuery(document).ready(function($){
+        $.ajaxSetup({
+            beforeSend: function (){$('#ajax_loader').show();},
+            complete: function (){$('#ajax_loader').hide();}
+        });
         $.ajax({
             url: "<?=$this->companies_url?>"
         }).done(function(data) {
