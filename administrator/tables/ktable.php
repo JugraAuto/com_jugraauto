@@ -43,15 +43,6 @@ class JugraautoTableKtable extends JTable {
             $registry->loadArray($array['metadata']);
             $array['metadata'] = (string) $registry;
         }
-        if(!JFactory::getUser()->authorise('core.admin', 'com_jugraauto.city.'.$array['id'])){
-            $actions = JFactory::getACL()->getActions('com_jugraauto','city');
-            $default_actions = JFactory::getACL()->getAssetRules('com_jugraauto.city.'.$array['id'])->getData();
-            $array_jaccess = array();
-            foreach($actions as $action){
-                $array_jaccess[$action->name] = $default_actions[$action->name];
-            }
-            $array['rules'] = $this->JAccessRulestoArray($array_jaccess);
-        }
         //Bind the rules for ACL where supported.
         if (isset($array['rules']) && is_array($array['rules'])) {
                 $this->setRules($array['rules']);

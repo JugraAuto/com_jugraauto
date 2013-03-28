@@ -10,22 +10,26 @@
 defined('_JEXEC') or die;
 
 // Import JTableMenu
-//JLoader::register('JTableMenu', JPATH_PLATFORM . '/joomla/database/table/menu.php');
-require_once dirname(__FILE__) . '/ktable.php'; 
+JLoader::register('JTableMenu', JPATH_PLATFORM . '/joomla/database/table/menu.php');
+
+//require_once dirname(__FILE__) . '/ktable.php'; 
+jimport('joomla.database.tablenested');
 /**
  * @package		Joomla.Administrator
  * @subpackage	com_menus
  */
 //class JugraautoTableMenu extends JTableMenu
-class JugraautoTableMenu extends JugraautoTableKtable
+class JugraautoTableMenu extends JTableMenu
 {
     /**
      * Constructor
      *
      * @param JDatabase A database connector object
      */
-    public function __construct(&$db) {
-        $this->asset_name = 'menu';
-        parent::__construct('#__menu', 'id', $db);
-    }
+	public function delete($pk = null, $children = false)
+	{
+		return parent::delete($pk, $children);
+	}
+        
+       
 }

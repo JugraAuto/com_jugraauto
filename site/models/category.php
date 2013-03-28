@@ -202,13 +202,13 @@ class JugraautoModelCategory extends JModelForm
      */
     public function getMenu()
     {
-        $alias = $this->getData()->alias;
-        if(!$alias)
+        $path = $this->getData()->path;
+        if(!$path)
         {
             return FALSE;
         }
         $menu = $this->getTable('menu');
-        if($menu->load(array('alias'=>$alias)))
+        if($menu->load(array('path'=>$path)))
         {
             return $menu;
         }

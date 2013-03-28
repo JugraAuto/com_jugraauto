@@ -39,6 +39,7 @@ class JugraautoViewCategory extends JView {
         // то делаем перенаправление на соотв. пункт меню.
         //Itemid=164
         $menu = $this->get('Menu');
+//        var_dump($menu);
         if($menu->id)
         {
             $Itemid = JRequest::getInt('Itemid');
@@ -47,8 +48,7 @@ class JugraautoViewCategory extends JView {
             if(!$Itemid OR $Itemid != $menu->id)
             {
                 $uri = JRoute::_(JUri::base()).$menu->path;
-//        var_dump($uri);
-                JFactory::getApplication()->redirect($uri);
+//                JFactory::getApplication()->redirect($uri);
             }
         }
         $this->has_company = $this->get('Has_company');

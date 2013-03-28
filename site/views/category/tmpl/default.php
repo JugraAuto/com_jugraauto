@@ -14,19 +14,35 @@ defined('_JEXEC') or die;
 $lang = JFactory::getLanguage();
 $lang->load('com_jugraauto', JPATH_ADMINISTRATOR);
 $ajax_loader_src = JURI::base().'components/com_jugraauto/assets/images/ajax-loader.gif';
+//var_dump($this->item);
 ?>
-<h1><?=$this->item->title?><img id="ajax_loader" src="<?=$ajax_loader_src?>" alt="ajax loader" style="display: none; margin-left: 10px"></h1>
+<h1>
+    <?php $params = json_decode($this->item->params)?>
+    <?php if($params->image):?>
+        <img src ="<?=$params->image?>" alt="<?=$this->item->title?>">
+    <?php endif;?>
+    
+    <?=$this->item->title?><img id="ajax_loader" src="<?=$ajax_loader_src?>" alt="ajax loader" style="display: none; margin-left: 10px">
+</h1>
+<?php if($this->item->note):?>
+    <h4><?=$this->item->note?></h4>
+<?php endif?>
+<?php if($this->item->description):?>
+    <?=$this->item->description?>
+<?php endif?>
 <?php if( $this->item ) : ?>
     <?php if($this->children):?>
     <ul>
             <?php foreach ($this->children as $item) : ?>
-            <?php $href = JRoute::_(JUri::base().'index.php?option=com_jugraauto&view=category&category_id='.(int)$item->id)?>
-                    <li><a href="<?=$href;?>"><?php echo $item->title; ?></a></li>
+        
+            <?php $href = JRoute::_(JUri::base().$item->path)?>
+                    <li>
+                        <a href="<?=$href;?>">
+                            <?php echo $item->title; ?>
+                        </a>
+                    </li>
             <?php endforeach; ?>
     </ul>
-    <?php endif?>
-    <?php if($this->item->description):?>
-        <?=$this->item->description?>
     <?php endif?>
 <?php endif;?>
 <?php if($this->has_company):?>

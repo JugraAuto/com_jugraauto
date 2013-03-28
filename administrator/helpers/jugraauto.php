@@ -34,6 +34,11 @@ class JugraautoHelper
 			'index.php?option=com_jugraauto&view=cities',
 			$vName == 'cities'
 		);
+		JSubMenuHelper::addEntry(
+			JText::_('COM_JUGRAAUTO_TITLE_MENU'),
+			'index.php?option=com_jugraauto&view=menues',
+			$vName == 'menues'
+		);
 
 	}
 
